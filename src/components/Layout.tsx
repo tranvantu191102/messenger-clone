@@ -10,6 +10,7 @@ import Conversation from "../pages/Conversation";
 import Home from "../pages/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import Chat from "../pages/Chat";
 
 const Layout: FC = () => {
   const { setCurrentUser } = useContext(AuthContext);
@@ -34,7 +35,7 @@ const Layout: FC = () => {
           photoURL,
         });
         setIsLogin(true);
-        navigate("/conversation");
+        // navigate("/conversation");
       } else {
         setCurrentUser(null);
         setIsLogin(false);
@@ -46,7 +47,12 @@ const Layout: FC = () => {
   return (
     <div>
       <Routes>
-        {isLogin && <Route path="/conversation" element={<Conversation />} />}
+        {isLogin && (
+          <Route path="/conversation">
+            <Route index element={<Conversation />} />
+            <Route path=":id" element={<Chat />} />
+          </Route>
+        )}
       </Routes>
       <Routes>
         <Route path="/" element={<Home />} />
