@@ -52,7 +52,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
               <img
                 src={filtered?.[0]?.data()?.photoURL || AVATAR_DEFAULT}
                 alt=""
-                className="w-full h-full rounded-full object-cover"
+                className="w-full h-full rounded-full flex-shrink-0"
               />
             </div>
             <div className="font-semibold text-lg text-black w-[320px] truncate">
@@ -101,7 +101,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
                 <img
                   src={IMAGE_PROXY(conversationInfo?.group?.groupImage)}
                   alt=""
-                  className="w-full h-full rounded-full"
+                  className="w-full h-full rounded-full flex-shrink-0"
                 />
               </div>
             ) : (
@@ -117,7 +117,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
                       AVATAR_DEFAULT
                     }
                     alt=""
-                    className="w-[30px] h-[30px] rounded-full"
+                    className="w-[30px] h-[30px] rounded-full object-cover"
                   />
                 </div>
                 <div
@@ -131,7 +131,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
                       AVATAR_DEFAULT
                     }
                     alt=""
-                    className="w-[30px] h-[30px] rounded-full"
+                    className="w-[30px] h-[30px] rounded-full object-cover"
                   />
                 </div>
               </div>
