@@ -19,3 +19,22 @@ export interface ConversationInfo {
   };
   theme: string;
 }
+
+export interface MessageInfo {
+  id?: string;
+  sender: string;
+  type: "text" | "image" | "file" | "sticker" | "removed";
+  content: string;
+  replyTo?: string;
+  file?: {
+    name: string;
+    size: number;
+  };
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  reactions: {
+    [key: string]: number;
+  };
+}

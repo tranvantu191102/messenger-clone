@@ -29,13 +29,13 @@ const ListMember: FC<ListMemberProps> = ({ conversationInfo }) => {
                 {user?.data()?.displayName}
               </div>
               <div className="text-sm text-gray-700">
-                {conversationInfo?.group?.admin.includes(user?.id)
+                {conversationInfo?.group?.admin?.includes(user?.id)
                   ? "Quản trị viên"
                   : ""}
               </div>
             </div>
           </div>
-          {!conversationInfo?.group?.admin.includes(user?.id) ? (
+          {!conversationInfo?.group?.admin?.includes(user?.id) ? (
             <div className="p-2 bg-transparent rounded-full hover:bg-gray-100 cursor-pointer relative group">
               <BsThreeDots className="w-5 h-5 fill-gray-700" />
               <div

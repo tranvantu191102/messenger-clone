@@ -27,6 +27,7 @@ const SideBar: FC<SideBarProps> = ({
   const { currentUser } = useContext(AuthContext);
 
   const { loading, data } = useQueryCollection(
+    "coversations",
     query(
       collection(db, "conversations"),
       orderBy("updateAt", "desc"),

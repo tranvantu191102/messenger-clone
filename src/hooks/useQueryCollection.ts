@@ -8,6 +8,7 @@ import {
 import { useState, useEffect } from "react";
 
 export const useQueryCollection = (
+  key: string,
   collection: CollectionReference | Query<DocumentData>
 ) => {
   const [data, setData] = useState<QuerySnapshot<DocumentData> | null>(null);
@@ -33,7 +34,7 @@ export const useQueryCollection = (
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [key]);
 
   return { data, loading, error };
 };

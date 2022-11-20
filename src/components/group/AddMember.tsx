@@ -18,6 +18,7 @@ const AddMember: FC<AddMemberProps> = ({
   conversationId,
 }) => {
   const { loading, data } = useQueryCollection(
+    "users-not-member",
     query(
       collection(db, "users"),
       where(

@@ -23,7 +23,10 @@ const CreateConversation: FC<CreateConversationProps> = ({
   setIsOpenCreateConversation,
 }) => {
   const { currentUser } = useContext(AuthContext);
-  const { loading, data } = useQueryCollection(collection(db, "users"));
+  const { loading, data } = useQueryCollection(
+    "users",
+    collection(db, "users")
+  );
   const [userSelected, setUserSelected] = useState<string[]>([]);
   const [creating, setCreating] = useState<boolean>(false);
   const navigate = useNavigate();

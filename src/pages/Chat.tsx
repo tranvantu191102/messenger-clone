@@ -4,6 +4,7 @@ import CreateConversation from "../components/conversation/CreateConversation";
 import ChatHeader from "../components/chat/ChatHeader";
 import ChatInput from "../components/chat/ChatInput";
 import ChatView from "../components/chat/ChatView";
+import Skeleton from "../components/Skeleton";
 
 import { useQueryDocument } from "../hooks/useQueryDocument";
 import { doc } from "firebase/firestore";
@@ -13,6 +14,7 @@ import { ConversationInfo } from "../shared/types";
 import Profile from "../components/Profile";
 import SettingConversation from "../components/SettingConversation";
 import GroupInfo from "../components/group/GroupInfo";
+import RemoveMessage from "../components/messages/RemoveMessage";
 
 const Chat: FC = () => {
   const [isOpenCreateConversation, setIsOpenCreateConversation] =
@@ -20,7 +22,9 @@ const Chat: FC = () => {
   const [isOpenProfile, setIsOpenProfile] = useState(false);
   const [isOpenSettingConversation, setIsOpenSettingConversation] =
     useState(false);
-  const [isOpenGroupInfo, setIsOpenGroupInfo] = useState(true);
+  const [isOpenGroupInfo, setIsOpenGroupInfo] = useState(false);
+  const [isOpenRemoveMessage, setIsOpenRemoveMessage] = useState(true);
+  const [messageRemove, setMessageRemove] = useState("");
 
   const { id } = useParams();
 
@@ -36,15 +40,34 @@ const Chat: FC = () => {
         />
       </div>
       <div className="ml-[360px] h-full">
-        <div className="h-full">
-          <ChatHeader
-            conversationInfo={data?.data() as ConversationInfo}
-            setIsOpenSettingConversation={setIsOpenSettingConversation}
-            setIsOpenGroupInfo={setIsOpenGroupInfo}
-          />
-          <ChatView />
-          <ChatInput conversationInfo={data?.data() as ConversationInfo} />
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-between px-5 py-[11.5px] w-full">
+            <div className="flex items-center justify-start ">
+              <Skeleton className="w-[50px] h-[50px] rounded mr-4" />
+              <Skeleton className="w-[100px] h-[15px]" />
+            </div>
+            <div className="flex items-center justify-start ">
+              <Skeleton className="w-[40px] h-[40px] rounded mr-4" />
+              <Skeleton className="w-[40px] h-[40px] rounded mr-4" />
+            </div>
+          </div>
+        ) : (
+          <div className="h-full">
+            <ChatHeader
+              conversationInfo={data?.data() as ConversationInfo}
+              setIsOpenSettingConversation={setIsOpenSettingConversation}
+              setIsOpenGroupInfo={setIsOpenGroupInfo}
+            />
+            <ChatView
+              conversationInfo={data?.data() as ConversationInfo}
+              conversationId={data?.id as string}
+            />
+            <ChatInput
+              conversationInfo={data?.data() as ConversationInfo}
+              conversationId={data?.id as string}
+            />
+          </div>
+        )}
       </div>
       {isOpenCreateConversation ? (
         <CreateConversation
@@ -65,6 +88,9 @@ const Chat: FC = () => {
           conversationInfo={data?.data() as ConversationInfo}
           conversationId={id as string}
         />
+      ) : null}
+      {isOpenRemoveMessage ? (
+        <RemoveMessage setIsOpenRemoveMessage={setIsOpenRemoveMessage} />
       ) : null}
     </div>
   );
