@@ -6,6 +6,7 @@ import { GoTrashcan } from "react-icons/go";
 
 import ReplyMessage from "./ReplyMessage";
 import ReactionMessagePopup from "./ReactionMessagePopup";
+import ReactionMessageStatus from "./ReactionMessageStatus";
 
 interface RightMessagesProps {
   messagesInfo: MessageInfo;
@@ -82,6 +83,7 @@ const RightMessages: FC<RightMessagesProps> = ({
                     <ReactionMessagePopup
                       conversationId={conversationId as string}
                       messageId={messageId as string}
+                      setIsOpenReactionPopup={setIsOpenReactionPopup}
                     />
                   </div>
                 ) : null}
@@ -103,7 +105,19 @@ const RightMessages: FC<RightMessagesProps> = ({
               className="py-2 px-3 text-white rounded-xl max-w-[250px]"
               style={{ backgroundColor: `${conversationInfo.theme}` }}
             >
-              {messagesInfo.content}
+              <div className="text-base text-white font-normal">
+                {messagesInfo.content}
+              </div>
+              {messagesInfo?.reactions ? (
+                <div className="absolute -bottom-2 right-0">
+                  <ReactionMessageStatus
+                    messageId={messageId as string}
+                    conversationId={conversationId as string}
+                    messagesInfo={messagesInfo as MessageInfo}
+                    conversationInfo={conversationInfo as ConversationInfo}
+                  />
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

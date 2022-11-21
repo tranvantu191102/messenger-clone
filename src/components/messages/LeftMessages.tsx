@@ -5,6 +5,7 @@ import { MessageInfo, ConversationInfo } from "../../shared/types";
 import { useInfoUsers } from "../../hooks/useInfoUsers";
 import { AVATAR_DEFAULT, IMAGE_PROXY } from "../../shared/constants";
 import ReactionMessagePopup from "./ReactionMessagePopup";
+import ReactionMessageStatus from "./ReactionMessageStatus";
 
 import ReplyMessage from "./ReplyMessage";
 
@@ -113,11 +114,23 @@ const LeftMessages: FC<LeftMessagesProps> = ({
                 </div>
               ) : null}
               <div
-                className={`py-2 px-3 bg-gray-200 rounded-xl max-w-[250px] ${
+                className={`py-2 px-3 bg-gray-200 rounded-xl max-w-[250px] relative ${
                   getAvatar ? "" : "ml-12"
                 }`}
               >
-                {messagesInfo.content}
+                <div className="text-base text-black font-normal">
+                  {messagesInfo.content}
+                </div>
+                {messagesInfo?.reactions ? (
+                  <div className="absolute -bottom-2 left-0">
+                    <ReactionMessageStatus
+                      messageId={messageId as string}
+                      conversationId={conversationId as string}
+                      messagesInfo={messagesInfo as MessageInfo}
+                      conversationInfo={conversationInfo as ConversationInfo}
+                    />
+                  </div>
+                ) : null}
               </div>
             </div>
             <div
@@ -137,6 +150,7 @@ const LeftMessages: FC<LeftMessagesProps> = ({
                     <ReactionMessagePopup
                       conversationId={conversationId as string}
                       messageId={messageId as string}
+                      setIsOpenReactionPopup={setIsOpenReactionPopup}
                     />
                   </div>
                 ) : null}

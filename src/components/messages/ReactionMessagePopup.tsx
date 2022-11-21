@@ -7,11 +7,13 @@ import { doc, updateDoc } from "firebase/firestore";
 interface ReactionMessagePopupProps {
   conversationId: string;
   messageId: string;
+  setIsOpenReactionPopup: (value: boolean) => void;
 }
 
 const ReactionMessagePopup: FC<ReactionMessagePopupProps> = ({
   conversationId,
   messageId,
+  setIsOpenReactionPopup,
 }) => {
   const { currentUser } = useContext(AuthContext);
 
@@ -19,6 +21,7 @@ const ReactionMessagePopup: FC<ReactionMessagePopupProps> = ({
     updateDoc(doc(db, "conversations", conversationId, "messages", messageId), {
       [`reactions.${currentUser?.uid}`]: index,
     });
+    setIsOpenReactionPopup(false);
   };
 
   return (

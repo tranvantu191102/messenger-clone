@@ -68,7 +68,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
               <div
                 className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 min-w-[160px] py-[2px] bg-gray-800 text-white 
               font-normal text-base rounded-lg text-center invisible opacity-0 group-hover:visible group-hover:opacity-100
-              transition-all duration-100
+              transition-all duration-100 z-[9999]
               "
               >
                 Bắt đầu gọi video
@@ -84,7 +84,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
               <div
                 className="absolute top-[calc(100%+10px)] right-0 min-w-[200px] py-[2px] bg-gray-800 text-white 
               font-normal text-base rounded-lg text-center invisible opacity-0 group-hover:visible group-hover:opacity-100
-              transition-all duration-100
+              transition-all duration-100 z-[9999]
               "
               >
                 Cài đặt cuộc trò chuyện
@@ -154,7 +154,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
               <div
                 className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 min-w-[160px] py-[2px] bg-gray-800 text-white 
               font-normal text-base rounded-lg text-center invisible opacity-0 group-hover:visible group-hover:opacity-100
-              transition-all duration-100
+              transition-all duration-100 z-[9999]
               "
               >
                 Bắt đầu gọi video
@@ -172,7 +172,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
               <div
                 className="absolute top-[calc(100%+4px)] left-1/2 -translate-x-1/2 min-w-[180px] py-[2px] bg-gray-800 text-white 
               font-normal text-base rounded-lg text-center invisible opacity-0 group-hover:visible group-hover:opacity-100
-              transition-all duration-100
+              transition-all duration-100 z-[9999]
               "
               >
                 Thông tin thành viên
@@ -188,7 +188,7 @@ const ChatHeader: FC<ChatHeaderProps> = ({
               <div
                 className="absolute top-[calc(100%+10px)] right-0 min-w-[200px] py-[2px] bg-gray-800 text-white 
               font-normal text-base rounded-lg text-center invisible opacity-0 group-hover:visible group-hover:opacity-100
-              transition-all duration-100
+              transition-all duration-100 z-[9999]
               "
               >
                 Cài đặt cuộc trò chuyện
