@@ -12,9 +12,18 @@ import { query, collection, orderBy, limitToLast } from "firebase/firestore";
 interface ChatViewProps {
   conversationInfo: ConversationInfo;
   conversationId: string;
+  handleOpenRemoveMessage: (value: string) => void;
+  setMessageReply: (value: any) => void;
+  messageReply: any;
 }
 
-const ChatView: FC<ChatViewProps> = ({ conversationInfo, conversationId }) => {
+const ChatView: FC<ChatViewProps> = ({
+  conversationInfo,
+  conversationId,
+  handleOpenRemoveMessage,
+  setMessageReply,
+  messageReply,
+}) => {
   const [limitData, setLimitData] = useState<number>(11);
   const { currentUser } = useContext(AuthContext);
 
@@ -58,7 +67,6 @@ const ChatView: FC<ChatViewProps> = ({ conversationInfo, conversationId }) => {
     };
   }, []);
 
-  console.log(limitData);
   //<div className="h-[calc(100vh-144px)]">ChatView</div>
   return (
     <InfiniteScroll
@@ -68,7 +76,7 @@ const ChatView: FC<ChatViewProps> = ({ conversationInfo, conversationId }) => {
       style={{ display: "flex", flexDirection: "column-reverse" }}
       inverse={true}
       loader={<h4>Loading...</h4>}
-      height={`calc(100vh - 144px)`}
+      height={`${messageReply ? "calc(100vh - 208px)" : "calc(100vh - 144px)"}`}
     >
       <div
         className={`${
@@ -83,18 +91,28 @@ const ChatView: FC<ChatViewProps> = ({ conversationInfo, conversationId }) => {
             Hãy bắt đầu cuộc trò chuyện.
           </div>
         ) : (
-          data?.docs?.map((message) => (
+          data?.docs?.map((message, index) => (
             <div key={message?.id}>
               {message?.data()?.sender === currentUser?.uid ? (
                 <RightMessages
                   messagesInfo={message?.data() as MessageInfo}
-                  messagesId={message?.id as string}
+                  messageId={message?.id as string}
                   conversationInfo={conversationInfo as ConversationInfo}
+                  handleOpenRemoveMessage={handleOpenRemoveMessage}
+                  setMessageReply={setMessageReply}
+                  conversationId={conversationId as string}
                 />
               ) : (
                 <LeftMessages
                   messagesInfo={message?.data() as MessageInfo}
                   conversationInfo={conversationInfo}
+                  getAvatar={
+                    data?.docs?.[index]?.data()?.sender !==
+                    data?.docs?.[index + 1]?.data()?.sender
+                  }
+                  setMessageReply={setMessageReply}
+                  messageId={message?.id as string}
+                  conversationId={conversationId as string}
                 />
               )}
             </div>

@@ -9,7 +9,7 @@ import {
 } from "react";
 import { BsFillEmojiSmileFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
-import { ConversationInfo } from "../../shared/types";
+import { ConversationInfo, MessageInfo } from "../../shared/types";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { AuthContext } from "../../contexts/AuthContext";
 
@@ -25,11 +25,15 @@ import {
 interface InputSectionProps {
   conversationInfo: ConversationInfo;
   conversationId: string;
+  messageReply: any;
+  setMessageReply: (value: any) => void;
 }
 
 const InputSection: FC<InputSectionProps> = ({
   conversationInfo,
   conversationId,
+  messageReply,
+  setMessageReply,
 }) => {
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
   const [message, setMessage] = useState<string>("");
@@ -79,10 +83,11 @@ const InputSection: FC<InputSectionProps> = ({
       sender: currentUser?.uid,
       type: "text",
       content: message,
-      replyTo: null,
+      replyTo: messageReply,
       createdAt: serverTimestamp(),
     });
     setMessage("");
+    setMessageReply(null);
     updateTimestamp();
   };
 

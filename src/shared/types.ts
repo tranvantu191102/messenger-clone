@@ -25,7 +25,7 @@ export interface MessageInfo {
   sender: string;
   type: "text" | "image" | "file" | "sticker" | "removed";
   content: string;
-  replyTo?: string;
+  replyTo?: MessageInfo;
   file?: {
     name: string;
     size: number;

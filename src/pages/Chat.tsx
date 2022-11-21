@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import SideBar from "../components/conversation/SideBar";
 import CreateConversation from "../components/conversation/CreateConversation";
 import ChatHeader from "../components/chat/ChatHeader";
@@ -10,7 +10,7 @@ import { useQueryDocument } from "../hooks/useQueryDocument";
 import { doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { useParams } from "react-router-dom";
-import { ConversationInfo } from "../shared/types";
+import { ConversationInfo, MessageInfo } from "../shared/types";
 import Profile from "../components/Profile";
 import SettingConversation from "../components/SettingConversation";
 import GroupInfo from "../components/group/GroupInfo";
@@ -23,13 +23,23 @@ const Chat: FC = () => {
   const [isOpenSettingConversation, setIsOpenSettingConversation] =
     useState(false);
   const [isOpenGroupInfo, setIsOpenGroupInfo] = useState(false);
-  const [isOpenRemoveMessage, setIsOpenRemoveMessage] = useState(true);
+  const [isOpenRemoveMessage, setIsOpenRemoveMessage] = useState(false);
   const [messageRemove, setMessageRemove] = useState("");
+  const [messageReply, setMessageReply] = useState<any>(null);
+
+  const handleOpenRemoveMessage = (messageId: string) => {
+    setIsOpenRemoveMessage(true);
+    setMessageRemove(messageId);
+  };
 
   const { id } = useParams();
 
   const document = doc(db, "conversations", id as string);
   const { loading, data } = useQueryDocument(document, id as string);
+
+  useEffect(() => {
+    setMessageReply(null);
+  }, [id as string]);
 
   return (
     <div className="w-full bg-white h-screen">
@@ -61,10 +71,15 @@ const Chat: FC = () => {
             <ChatView
               conversationInfo={data?.data() as ConversationInfo}
               conversationId={data?.id as string}
+              handleOpenRemoveMessage={handleOpenRemoveMessage}
+              setMessageReply={setMessageReply}
+              messageReply={messageReply as any}
             />
             <ChatInput
               conversationInfo={data?.data() as ConversationInfo}
               conversationId={data?.id as string}
+              messageReply={messageReply as any}
+              setMessageReply={setMessageReply}
             />
           </div>
         )}
@@ -90,7 +105,11 @@ const Chat: FC = () => {
         />
       ) : null}
       {isOpenRemoveMessage ? (
-        <RemoveMessage setIsOpenRemoveMessage={setIsOpenRemoveMessage} />
+        <RemoveMessage
+          setIsOpenRemoveMessage={setIsOpenRemoveMessage}
+          messageRemove={messageRemove as string}
+          conversationId={id as string}
+        />
       ) : null}
     </div>
   );
