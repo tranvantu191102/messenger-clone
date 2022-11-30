@@ -82,7 +82,7 @@ const InputSection: FC<InputSectionProps> = ({
     addDoc(collection(db, "conversations", conversationId, "messages"), {
       sender: currentUser?.uid,
       type: "text",
-      content: message,
+      content: message.trim(),
       replyTo: messageReply,
       createdAt: serverTimestamp(),
     });

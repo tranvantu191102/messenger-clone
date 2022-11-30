@@ -18,7 +18,7 @@ const GroupInfo: FC<GroupInfoProps> = ({
   const [isShowListMember, setIsShowListMember] = useState(true);
 
   return (
-    <div className="fixed inset-0 w-full h-full z-10 bg-[rgba(0,0,0,0.5)] text-black">
+    <div className="fixed inset-0 w-full h-full z-[99999] bg-[rgba(0,0,0,0.5)] text-black">
       <div className="w-full h-full relative">
         <div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] 

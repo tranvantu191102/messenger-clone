@@ -32,7 +32,15 @@ const ChatInput: FC<ChatInputProps> = ({
                 : "Đang trả lời"
             }`}</div>
             <div className="text-sm text-gray-700 font-normal italic truncate w-[500px]">
-              {messageReply?.content}
+              {messageReply?.type === "text"
+                ? "Một tin nhắn"
+                : messageReply?.type === "image"
+                ? "Một hình ảnh"
+                : messageReply?.type === "file"
+                ? "File đính kèm"
+                : messageReply?.type === "sticker"
+                ? "Một nhãn dán"
+                : null}
             </div>
           </div>
           <div
@@ -44,7 +52,11 @@ const ChatInput: FC<ChatInputProps> = ({
         </div>
       ) : null}
       <div className="flex items-center justify-between h-full">
-        <FileSection conversationInfo={conversationInfo} />
+        <FileSection
+          conversationInfo={conversationInfo}
+          conversationId={conversationId}
+          messageReply={messageReply as any}
+        />
         <InputSection
           conversationInfo={conversationInfo}
           conversationId={conversationId}

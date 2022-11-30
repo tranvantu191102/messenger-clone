@@ -1,10 +1,11 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useContext } from "react";
 import SideBar from "../components/conversation/SideBar";
 import CreateConversation from "../components/conversation/CreateConversation";
 import ChatHeader from "../components/chat/ChatHeader";
 import ChatInput from "../components/chat/ChatInput";
 import ChatView from "../components/chat/ChatView";
 import Skeleton from "../components/Skeleton";
+import { ModalContext } from "../contexts/ModalContext";
 
 import { useQueryDocument } from "../hooks/useQueryDocument";
 import { doc } from "firebase/firestore";
@@ -15,6 +16,8 @@ import Profile from "../components/Profile";
 import SettingConversation from "../components/SettingConversation";
 import GroupInfo from "../components/group/GroupInfo";
 import RemoveMessage from "../components/messages/RemoveMessage";
+import ImagePreview from "../components/ImagePreview";
+import ReactionsInfo from "../components/ReactionsInfo";
 
 const Chat: FC = () => {
   const [isOpenCreateConversation, setIsOpenCreateConversation] =
@@ -36,6 +39,8 @@ const Chat: FC = () => {
 
   const document = doc(db, "conversations", id as string);
   const { loading, data } = useQueryDocument(document, id as string);
+
+  const { urlImage, reactionsInfo } = useContext(ModalContext);
 
   useEffect(() => {
     setMessageReply(null);
@@ -111,6 +116,8 @@ const Chat: FC = () => {
           conversationId={id as string}
         />
       ) : null}
+      {urlImage !== "" ? <ImagePreview /> : null}
+      {reactionsInfo ? <ReactionsInfo /> : null}
     </div>
   );
 };
