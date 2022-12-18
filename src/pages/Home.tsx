@@ -1,10 +1,13 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import HeaderHomePage from "../components/header/HeaderHomePage";
+import { AuthContext } from "../contexts/AuthContext";
 
 import bannerImage from "../assets/banner.png";
 import { Link } from "react-router-dom";
 
 const Home: FC = () => {
+  const { isLogin } = useContext(AuthContext);
+
   return (
     <div className="w-full">
       <HeaderHomePage />
@@ -19,11 +22,19 @@ const Home: FC = () => {
               giản và thú vị.
             </p>
             <div>
-              <Link to="/login">
-                <button className="py-5 px-16 rounded-3xl text-white bg-blue-500 font-medium text-2xl mt-5">
-                  Đăng nhập
-                </button>
-              </Link>
+              {!isLogin ? (
+                <Link to="/login">
+                  <button className="py-5 px-16 rounded-3xl text-white bg-blue-500 font-medium text-2xl mt-5">
+                    Đăng nhập
+                  </button>
+                </Link>
+              ) : (
+                <Link to="/conversation">
+                  <button className="py-5 px-16 rounded-3xl text-white bg-blue-500 font-medium text-2xl mt-5">
+                    Bắt đầu cuộc trò chuyện
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
           <div className="w-1/2">

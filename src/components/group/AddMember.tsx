@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ConversationInfo } from "../../shared/types";
 import { useQueryCollection } from "../../hooks/useQueryCollection";
 import { db } from "../../firebase/config";
-import { query, collection, where } from "firebase/firestore";
+import { query, collection, where, updateDoc, doc } from "firebase/firestore";
 import { IMAGE_PROXY, AVATAR_DEFAULT } from "../../shared/constants";
 
 import { AiOutlinePlusSquare } from "react-icons/ai";
@@ -11,11 +11,13 @@ import Skeleton from "../Skeleton";
 interface AddMemberProps {
   conversationInfo: ConversationInfo;
   conversationId: string;
+  setIsOpenGroupInfo: (value: boolean) => void;
 }
 
 const AddMember: FC<AddMemberProps> = ({
   conversationInfo,
   conversationId,
+  setIsOpenGroupInfo,
 }) => {
   const { loading, data } = useQueryCollection(
     "users-not-member",
@@ -30,6 +32,13 @@ const AddMember: FC<AddMemberProps> = ({
       )
     )
   );
+
+  const handleAddMember = (userId: string) => {
+    updateDoc(doc(db, "conversations", conversationId as string), {
+      users: [...conversationInfo.users, userId],
+    });
+    setIsOpenGroupInfo(false);
+  };
 
   if (loading) {
     return (
@@ -68,7 +77,10 @@ const AddMember: FC<AddMemberProps> = ({
               </div>
             </div>
           </div>
-          <div className="p-2 cursor-pointer hover:bg-gray-100 rounded-full relative group">
+          <div
+            className="p-2 cursor-pointer hover:bg-gray-100 rounded-full relative group"
+            onClick={() => handleAddMember(user?.data()?.uid as string)}
+          >
             <AiOutlinePlusSquare className="w-5 h-5" />
             <div
               className="absolute -bottom-5 left-1/2 -translate-x-1/2 px-3 py-[2px] bg-gray-900 text-white

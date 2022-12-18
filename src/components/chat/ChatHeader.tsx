@@ -50,7 +50,9 @@ const ChatHeader: FC<ChatHeaderProps> = ({
           <div className="flex items-center justify-start">
             <div className="w-[50px] h-[50px] mr-4">
               <img
-                src={filtered?.[0]?.data()?.photoURL || AVATAR_DEFAULT}
+                src={
+                  IMAGE_PROXY(filtered?.[0]?.data()?.photoURL) || AVATAR_DEFAULT
+                }
                 alt=""
                 className="w-full h-full rounded-full flex-shrink-0"
               />

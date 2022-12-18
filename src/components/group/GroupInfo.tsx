@@ -61,11 +61,14 @@ const GroupInfo: FC<GroupInfoProps> = ({
           {isShowListMember ? (
             <ListMember
               conversationInfo={conversationInfo as ConversationInfo}
+              conversationId={conversationId as string}
+              setIsOpenGroupInfo={setIsOpenGroupInfo}
             />
           ) : (
             <AddMember
               conversationId={conversationId as string}
               conversationInfo={conversationInfo}
+              setIsOpenGroupInfo={setIsOpenGroupInfo}
             />
           )}
         </div>

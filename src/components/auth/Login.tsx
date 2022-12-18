@@ -9,7 +9,6 @@ import {
   FacebookAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
-  getAdditionalUserInfo,
 } from "firebase/auth";
 import { auth } from "../../firebase/config";
 

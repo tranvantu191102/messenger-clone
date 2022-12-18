@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, useContext } from "react";
+import { FC, useEffect, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { auth, db } from "../firebase/config";
 import { onAuthStateChanged } from "firebase/auth";
@@ -13,8 +13,7 @@ import Register from "./auth/Register";
 import Chat from "../pages/Chat";
 
 const Layout: FC = () => {
-  const { setCurrentUser } = useContext(AuthContext);
-  const [isLogin, setIsLogin] = useState(false);
+  const { setCurrentUser, setIsLogin, isLogin } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -35,7 +34,7 @@ const Layout: FC = () => {
           photoURL,
         });
         setIsLogin(true);
-        // navigate("/conversation");
+        // navigate("/");
       } else {
         setCurrentUser(null);
         setIsLogin(false);
@@ -43,6 +42,14 @@ const Layout: FC = () => {
       }
     });
   }, []);
+
+  // if (isLogin) {
+  //   navigate("/conversation");
+  // }
+
+  useEffect(() => {
+    if (isLogin) navigate("/conversation");
+  }, [isLogin]);
 
   return (
     <div>

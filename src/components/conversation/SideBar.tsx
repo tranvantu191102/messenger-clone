@@ -69,23 +69,23 @@ const SideBar: FC<SideBarProps> = ({
               className="w-full h-full rounded-full"
             />
             <div
-              className="absolute top-[calc(100%+10px)] right-0 min-w-[200px] bg-gray-800 text-white 
+              className="absolute top-[calc(100%+10px)] right-0 min-w-[220px] bg-gray-800 text-white 
             rounded-lg invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100
             group-hover:pointer-events-auto transition-all duration-100 py-2"
             >
               <div
-                className="flex items-center justify-start py-3 px-2 hover:opacity-90"
+                className="flex items-center justify-start py-3 px-4 hover:opacity-90"
                 onClick={() => setIsOpenProfile(true)}
               >
                 <AiOutlineUser className="mr-2 w-6 h-6" />
-                <span className="text-xl font-light">Thông tin cá nhân</span>
+                <span className="text-lg font-light">Thông tin cá nhân</span>
               </div>
               <div
-                className="flex items-center justify-start py-3 px-2 hover:opacity-90"
+                className="flex items-center justify-start py-3 px-4 hover:opacity-90"
                 onClick={handleLogOut}
               >
                 <AiOutlineLogout className="mr-2 w-6 h-6" />
-                <span className="text-xl font-light">Đăng xuất</span>
+                <span className="text-lg font-light">Đăng xuất</span>
               </div>
               <div
                 className="absolute w-6 h-6 bg-gray-800 -top-1 right-3 transform rotate-45 shadow-xl 
