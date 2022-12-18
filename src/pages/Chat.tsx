@@ -11,7 +11,7 @@ import { useQueryDocument } from "../hooks/useQueryDocument";
 import { doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { useParams } from "react-router-dom";
-import { ConversationInfo, MessageInfo } from "../shared/types";
+import { ConversationInfo } from "../shared/types";
 import Profile from "../components/Profile";
 import SettingConversation from "../components/SettingConversation";
 import GroupInfo from "../components/group/GroupInfo";
@@ -37,8 +37,8 @@ const Chat: FC = () => {
 
   const { id } = useParams();
 
-  const document = doc(db, "conversations", id as string);
-  const { loading, data } = useQueryDocument(document, id as string);
+  const documentRef = doc(db, "conversations", id as string);
+  const { loading, data } = useQueryDocument(documentRef, id as string);
 
   const { urlImage, reactionsInfo } = useContext(ModalContext);
 

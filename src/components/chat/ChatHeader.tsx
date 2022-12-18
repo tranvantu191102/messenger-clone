@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import { ConversationInfo } from "../../shared/types";
 import { IMAGE_PROXY, AVATAR_DEFAULT } from "../../shared/constants";
 import { useInfoUsers } from "../../hooks/useInfoUsers";
@@ -27,6 +27,9 @@ const ChatHeader: FC<ChatHeaderProps> = ({
     (user) => user?.data()?.uid !== currentUser?.uid
   );
   // console.log(filtered?.[0]?.data());
+  useEffect(() => {
+    document.title = "Conversation";
+  }, []);
 
   if (loading) {
     return (

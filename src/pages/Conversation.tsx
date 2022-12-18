@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import SideBar from "../components/conversation/SideBar";
 import CreateConversation from "../components/conversation/CreateConversation";
 import Profile from "../components/Profile";
@@ -7,9 +7,12 @@ const Conversation: FC = () => {
   const [isOpenCreateConversation, setIsOpenCreateConversation] =
     useState(false);
   const [isOpenProfile, setIsOpenProfile] = useState(false);
-  const [isOpenSettingConversation, setIsOpenSettingConversation] =
-    useState(false);
+  // const [isOpenSettingConversation, setIsOpenSettingConversation] =
+  //   useState(false);
 
+  useEffect(() => {
+    document.title = "Conversation";
+  }, []);
   return (
     <div className="w-full bg-white h-screen">
       <div>
