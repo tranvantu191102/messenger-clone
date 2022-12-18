@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import HeaderHomePage from "../components/header/HeaderHomePage";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -7,7 +7,9 @@ import { Link } from "react-router-dom";
 
 const Home: FC = () => {
   const { isLogin } = useContext(AuthContext);
-
+  useEffect(() => {
+    document.title = "Home";
+  }, []);
   return (
     <div className="w-full">
       <HeaderHomePage />
