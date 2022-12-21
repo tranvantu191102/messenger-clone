@@ -1,8 +1,10 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { ConversationInfo } from "../../shared/types";
 import { AVATAR_DEFAULT, IMAGE_PROXY } from "../../shared/constants";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useInfoUsers } from "../../hooks/useInfoUsers";
+import { useLastMessage } from "../../hooks/useLastMessage";
+import { formatTime } from "../../shared/utils";
 
 import Skeleton from "../Skeleton";
 import { Link, useParams } from "react-router-dom";
@@ -16,12 +18,24 @@ const SelectedUser: FC<SelectedUserProps> = ({
   conversationInfo,
   conversationId,
 }) => {
+  const [userInfoLastMessage, setUserInfoLastMessage] = useState<any>(null);
   const { currentUser } = useContext(AuthContext);
   const { loading, data } = useInfoUsers(conversationInfo.users);
   const { id } = useParams();
   const filtered = data?.filter(
     (user) => user?.data()?.uid !== currentUser?.uid
   );
+
+  const { data: lastMessage } = useLastMessage(conversationId);
+  useEffect(() => {
+    data?.forEach((user) => {
+      if (user?.data()?.uid === lastMessage?.docs?.[0]?.data().sender) {
+        setUserInfoLastMessage(user as any);
+      }
+    });
+  }, [lastMessage]);
+
+  console.log(lastMessage?.docs?.[0]?.data());
 
   if (loading) {
     return (
@@ -38,7 +52,7 @@ const SelectedUser: FC<SelectedUserProps> = ({
   }
 
   return (
-    <div>
+    <div className="overflow-hidden">
       {conversationInfo.users.length === 2 ? (
         <Link to={`/conversation/${conversationId}`}>
           <div
@@ -59,8 +73,33 @@ const SelectedUser: FC<SelectedUserProps> = ({
               <div className="font-semibold text-lg text-black truncate w-[250px]">
                 {filtered?.[0]?.data()?.displayName}
               </div>
-              <div className="font-normal text-sm text-gray-700">
-                Không có tin nhắn nào gần đây.
+              <div className=" flex items-center">
+                <p className="font-normal text-sm text-gray-700 w-[180px] truncate overflow-hidden">
+                  {lastMessage?.docs?.length !== 0
+                    ? lastMessage?.docs?.[0].data()?.sender === currentUser?.uid
+                      ? "Bạn: "
+                      : ""
+                    : ""}
+                  {lastMessage?.docs?.length === 0
+                    ? "Không có tin nhắn nào gần đây."
+                    : lastMessage?.docs?.[0].data()?.type === "text"
+                    ? `${lastMessage?.docs?.[0].data()?.content}`
+                    : lastMessage?.docs?.[0].data()?.type === "image"
+                    ? `Đã gửi 1 ảnh`
+                    : lastMessage?.docs?.[0].data()?.type === "file"
+                    ? `Đã gửi 1 file đính kèm`
+                    : lastMessage?.docs?.[0].data()?.type === "removed"
+                    ? "Đã gở 1 tin nhắn"
+                    : ""}
+                </p>
+                <span className="font-normal text-sm text-gray-700">
+                  {lastMessage?.docs?.length !== 0
+                    ? `. ${formatTime(
+                        lastMessage?.docs?.[0]?.data()?.createdAt?.nanoseconds,
+                        lastMessage?.docs?.[0]?.data()?.createdAt?.seconds
+                      )}`
+                    : ""}
+                </span>
               </div>
             </div>
           </div>
@@ -121,8 +160,39 @@ const SelectedUser: FC<SelectedUserProps> = ({
                   }`
                 }`}
               </div>
-              <div className="font-normal text-sm text-gray-700">
-                Không có tin nhắn nào gần đây.
+              <div className=" flex items-center">
+                <p className="font-normal text-sm text-gray-700 truncate w-[180px] overflow-hidden inline-block">
+                  {lastMessage?.docs?.length !== 0
+                    ? lastMessage?.docs?.[0].data()?.sender === currentUser?.uid
+                      ? "Bạn: "
+                      : ""
+                    : ""}
+                  {userInfoLastMessage &&
+                  lastMessage?.docs?.[0].data()?.sender !== currentUser?.uid
+                    ? `${
+                        userInfoLastMessage?.data()?.displayName?.split(" ")[0]
+                      }: `
+                    : ""}
+                  {lastMessage?.docs?.length === 0
+                    ? "Không có tin nhắn nào gần đây."
+                    : lastMessage?.docs?.[0].data()?.type === "text"
+                    ? `${lastMessage?.docs?.[0].data()?.content}`
+                    : lastMessage?.docs?.[0].data()?.type === "image"
+                    ? `Đã gửi 1 ảnh`
+                    : lastMessage?.docs?.[0].data()?.type === "file"
+                    ? `Đã gửi 1 file đính kèm`
+                    : lastMessage?.docs?.[0].data()?.type === "removed"
+                    ? "Đã gở 1 tin nhắn"
+                    : ""}
+                </p>
+                <span className="font-normal text-sm text-gray-700">
+                  {lastMessage?.docs?.length !== 0
+                    ? `. ${formatTime(
+                        lastMessage?.docs?.[0]?.data()?.createdAt?.nanoseconds,
+                        lastMessage?.docs?.[0]?.data()?.createdAt?.seconds
+                      )}`
+                    : ""}
+                </span>
               </div>
             </div>
           </div>
