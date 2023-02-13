@@ -52,21 +52,31 @@ const Layout: FC = () => {
   }, [isLogin]);
 
   return (
-    <div>
-      <Routes>
-        {isLogin && (
-          <Route path="/conversation">
-            <Route index element={<Conversation />} />
-            <Route path=":id" element={<Chat />} />
-          </Route>
-        )}
-      </Routes>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-    </div>
+    <>
+      <div className="lg:block hidden">
+        <Routes>
+          {isLogin && (
+            <Route path="/conversation">
+              <Route index element={<Conversation />} />
+              <Route path=":id" element={<Chat />} />
+            </Route>
+          )}
+        </Routes>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </div>
+      <div className="lg:hidden block w-full h-screen relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  ">
+          <h2 className="text-center text-[32px] font-bold">Sorry!</h2>
+          <p className="text-center text-[26px] font-bold">
+            Website only support in PC screen!
+          </p>
+        </div>
+      </div>
+    </>
   );
 };
 

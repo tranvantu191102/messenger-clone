@@ -14,7 +14,7 @@ const Home: FC = () => {
     <div className="w-full">
       <HeaderHomePage />
       <div className="w-full flex justify-center">
-        <div className="flex items-start  justify-center mt-[100px] max-w-[1195px]">
+        <div className="flex items-start  justify-center mt-[100px] max-w-[1195px] px-10">
           <div className="w-1/2">
             <h1 className="text-header text-8xl font-semibold text-transparent py-3">
               Tụ họp <br></br> mọi lúc, mọi nơi

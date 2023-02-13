@@ -25,7 +25,7 @@ const HeaderHomePage: FC = () => {
 
   return (
     <header
-      className="w-full fixed top-0 left-1/2 -translate-x-1/2 bg-white"
+      className="w-full fixed top-0 left-1/2 -translate-x-1/2 bg-white "
       ref={headerRef}
     >
       <div className="w-full flex justify-center">
